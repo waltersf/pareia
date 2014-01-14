@@ -20,7 +20,7 @@ namespace Feraparda {
 		public:
 			string ToString();
 			Expression(string field_, string transform_, int start_, int size_, int max){
-				this->field = field_; 
+				this->field = field_;
 				this->transform = transform_;
 				this->size = size_;
 				this->start = start_;
@@ -46,7 +46,7 @@ namespace Feraparda {
 			~BlockConjunction();
 			string ToString();
 			//FIXME: Could be "friend" of the class Block
-			vector<Expression *> getExpressions(){return expressions;} 
+			vector<Expression *> getExpressions(){return expressions;}
 	};
 	class Block{
 		public:
@@ -71,7 +71,7 @@ namespace Feraparda {
 			BlockConjunction *currentConjunction;
 	};
 	class ClassicalBlock : public Block {
-		public: 
+		public:
 			ClassicalBlock(BlockType type) : Block(type){}
 			virtual vector<string> GenerateKeys(Record *);
 			virtual vector<string> GenerateKeys(Record *, bool);

@@ -136,7 +136,7 @@ static int evaluate_common_attributes(Comparator *comparator,
 	} else if (strcmp(attrs[i], (const char *) "field2") == 0) {
 		comparator->setField2(attrs[i + 1]);
 		retvalue = 1;
-	} else if (strcmp(attrs[i], (const char *) "use-weight-table") == 0 
+	} else if (strcmp(attrs[i], (const char *) "use-weight-table") == 0
 				&& strcmp(attrs[i + 1], "true") == 0) {
 		comparator->setUseWeightTable(true);
 	}
@@ -478,7 +478,7 @@ void Project::Start(void *data, const char *el, const char **attrs) {
 					} else if (strcmp(attrs[i], (const char *) "mState") == 0) {
 						comparator->setMState(atof(attrs[i + 1]));
 					}
-				
+
 				}
 				i += 2;
 			}
@@ -561,7 +561,7 @@ void Project::Start(void *data, const char *el, const char **attrs) {
 		}
 		//For optimization, use the indexes of fields instead of their names
 		project->UpdateFieldsIndexes();
-		
+
 		project->setCache(cache, cache2);
 		project->setIntraReadersCacheSize(intraReaders);
 	}

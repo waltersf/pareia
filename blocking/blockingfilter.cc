@@ -76,11 +76,11 @@ void BlockingFilter::ProcessDeterministicBlocking(){
 
 	/* Create a SQLite DB for storing the keys. In large databases, the key set doesn't fit in RAM */
 	#ifdef LOG_ENABLED
-    if (logger->IsLevelEnabled(LOGDEBUG)) {
-        LOGFPDEBUG(logger, "Using tmp dir = " + project->getTmpDir() +
-                   " (check if it exists before running!).");
-    }
-    #endif
+	if (logger->IsLevelEnabled(LOGDEBUG)) {
+		LOGFPDEBUG(logger, "Using tmp dir = " + project->getTmpDir() +
+				" (check if it exists before running!).");
+	}
+	#endif
 
 	sd::sqlite database(project->getTmpDir() + "/deterministic-blocking-pareia.db");
 	sd::sql queryKeysStmt (database);
@@ -88,7 +88,7 @@ void BlockingFilter::ProcessDeterministicBlocking(){
 	/* Remove previous table if it exists */
 	try{
 		/* Recreates the table. Temporary tables are faster because there is no journaling. */
-		database << "drop table if exists  deterministic ";
+		database << "drop table if exists deterministic ";
 		database << "create table deterministic (blockingKey varchar(10000), idRecord integer NULL, recordKey varchar(10000) NULL)";
 		database << "create index inx_key on deterministic(blockingKey)";
 
@@ -99,8 +99,8 @@ void BlockingFilter::ProcessDeterministicBlocking(){
 
 		database << "PRAGMA cache_size=100000";
 		database << "PRAGMA synchronous=OFF";
-    database << "PRAGMA journal_mode=OFF";
-    database << "PRAGMA temp_store=MEMORY";
+		database << "PRAGMA journal_mode=OFF";
+		database << "PRAGMA temp_store=MEMORY";
 		database << "begin transaction";
 		DataSource *smallest = project->getDataSource("0");
 		DataSource *largest;
@@ -142,7 +142,7 @@ void BlockingFilter::ProcessDeterministicBlocking(){
 					for (unsigned int i = 0; i < keys.size(); i++) {
 						/* Statement used to retrieve rows */
 						queryKeysStmt.reset(); //Otherwise, the first bound parameter will be used;
-						queryKeysStmt  << keys[i];
+						queryKeysStmt << keys[i];
 
 						if ((IS_BLOCKING_FLAG_DATA_SOURCE_1(recordMsg.blockId) || project->getTaskType() == DEDUPLICATION)
 								&& (queryKeysStmt.step())){//FOUND!
@@ -170,12 +170,12 @@ void BlockingFilter::ProcessDeterministicBlocking(){
 								insertKeysStmt << keys[i] << recordMsg.id1 << record->getField("id");
 								insertKeysStmt.step();
 							} catch(std::exception &err){
-								cout << "Exception: " << err.what() << " " <<  keys[i] << " " << recordMsg.id1 << " " << record->getField("id") << endl << flush;
+								cout << "Exception: " << err.what() << " " << keys[i] << " " << recordMsg.id1 << " " << record->getField("id") << endl << flush;
 								throw err;
 							}
 							//cout << "@@" << keys[i] << "|" << recordMsg.id1 << "|" << record->getField("id") << "@@" << endl;
 						}
-						//cout << "Key " <<  keys[i] << " " << keys[i].size() << endl << flush;
+						//cout << "Key " << keys[i] << " " << keys[i].size() << endl << flush;
 					}
 					delete record;
 				} else {
@@ -446,7 +446,7 @@ bool MergerMessage::Add(record_pair_msg_t msg) {
 	hashKey.id2 = msg.id2;
 	//cout << " Blocking " << msg.id1 << " " << msg.id2 << endl;
 
-	if (msg.id1 < msg.id2) { // Hack inserted to ensure the order  15/07/08
+	if (msg.id1 < msg.id2) { // Hack inserted to ensure the order 15/07/08
 		hashKey.id1 = msg.id1; //TODO: Review if the BI was right, it is generating pars
 		hashKey.id2 = msg.id2;
 	} else {

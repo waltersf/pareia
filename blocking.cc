@@ -24,12 +24,11 @@ vector<string> ClassicalBlock::GenerateKeys(Record * record){
 vector<string> ClassicalBlock::GenerateKeys(Record * record, bool ignoreIfAnyIsEmpty){
   vector<string> keys;
     /*
-	 * The blocking predicate is a disjunction of conjunctions and 
-	 * a conjunction is formed by expressions.
-	 * Each conjunction generates a blocking key.
-	 */
+     * The blocking predicate is a disjunction of conjunctions and
+     * a conjunction is formed by expressions.
+     * Each conjunction generates a blocking key.
+     */
   for(unsigned int c = 0; c < conjunctions.size(); c++){
-    bool fieldNotEmpty = true;
     string key = "";
     vector<Expression *> expressions = conjunctions[c]->getExpressions();
     for(unsigned int e = 0; e < expressions.size(); e++){
@@ -63,7 +62,7 @@ vector<string> ClassicalBlock::GenerateKeys(Record * record, bool ignoreIfAnyIsE
           if (size <= 0){
             size = 5;
           }
-          doubleMetaphone((const char*) dup, metaphone, size);	
+          doubleMetaphone((const char*) dup, metaphone, size);
           key += metaphone[0];
           key += metaphone[1];
           free(metaphone[0]);
@@ -112,16 +111,14 @@ vector<string> ClassicalBlock::GenerateKeys(Record * record, bool ignoreIfAnyIsE
         	free(aux);
 
 
-        } else {	  
+        } else {
           key += fieldValue;
         }
       } else if (ignoreIfAnyIsEmpty){
 		  key = "";
-		  fieldNotEmpty = false;
 		  break;
       } else {
-       // cout << "Field VAZIO " << endl; 
-       fieldNotEmpty = false; 
+       // cout << "Field VAZIO " << endl;
        //FIXME: Por que havia esse break aqui? break;
       }
     }
@@ -148,7 +145,7 @@ Expression::~Expression(){
 void Block::ListConjunctions(string padding){
   string result = padding;
   for(unsigned i = 0; i < conjunctions.size() - 1; i++){
-    result += "(" + conjunctions[i]->ToString() + ") OR \n" 
+    result += "(" + conjunctions[i]->ToString() + ") OR \n"
       + padding + padding + padding;
   }
   result += "(" + conjunctions[conjunctions.size() -1]->ToString() + ")";
@@ -163,5 +160,5 @@ string BlockConjunction::ToString(){
   return ret;
 }
 string Expression::ToString(){
-  return transform + "(" + field + ")"; 
+  return transform + "(" + field + ")";
 }
