@@ -109,8 +109,6 @@ vector<string> ClassicalBlock::GenerateKeys(Record * record, bool ignoreIfAnyIsE
         	brsoundex((char *) fieldValue.c_str(), aux, size);
         	key += aux;
         	free(aux);
-
-
         } else {
           key += fieldValue;
         }

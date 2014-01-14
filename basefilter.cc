@@ -37,7 +37,6 @@ void FerapardaBaseFilter::ReadAndEnqueueEvents(AnthillInputPort port, int size) 
 void *receive_message_thread_func(void *arg) {
 	receive_message_thread_param_t params = *(receive_message_thread_param_t *) arg;
 	AnthillUtil *util = params.util;
-	FerapardaBaseFilter *filter = params.filter;
 	AnthillInputPort *in = params.in;
 
 	char *buffer = new char[params.size];

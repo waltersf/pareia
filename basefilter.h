@@ -33,7 +33,7 @@ private:
 protected:
 	AnthillUtil *ahUtil;
 	Logger * logger;
-	map<string, event_queue_t	 > queues;
+	map<string, event_queue_t> queues;
 public:
 	FerapardaBaseFilter() {
 		ahUtil = NULL;
