@@ -1,0 +1,34 @@
+#!/bin/bash
+#Diretorio do programa
+PAREIA="${HOME}/prof/mds/pareia/pareia/src"
+
+# Coloque aqui o directorio contendo as bibliotecas do VOID/ANTHILL e dos filtros do pareia
+BASEDIR=$PAREIA
+VOID_LIBSDIR="/usr/lib"
+PAREIA_FILTROSDIR="${BASEDIR}:${BASEDIR}/reader:${BASEDIR}/blocking:${BASEDIR}/general:${BASEDIR}/merger:${BASEDIR}/result"
+
+export ANTHILL_TRACE_DIR="$DIR_SCRATCH/traces/$DATAHORA"
+HOSTNAME=`hostname`
+
+export DISPLAY=lares:0
+# se quiser depurar descomente
+DEBUG=0
+
+# nome do binario do console
+BIN="pareia"
+MAIN_SOURCE_FILE="main.cc"
+
+DEBUGGER="ddd"
+cd ${PAREIA}
+export LD_LIBRARY_PATH=${VOID_LIBSDIR}:${PAREIA_FILTROSDIR}:${LD_LIBRARY_PATH}
+#chama a aplicacao
+# formato: ./<nome binario> <nome deste arquivo>
+if [ "$DEBUG" = 1 ]; then
+     echo -e "break main.cc:8\n run $*\n" > start.gdb
+#    ${VOID_LIBSDIR}/generateGdbStartup.sh ${MAIN_SOURCE_FILE} "$*" > start.gdb
+
+   # ${DEBUGGER} ${BIN} -x start.gdb
+    valgrind  --error-limit=no  --show-reachable=yes --leak-check=full --log-file=/var/tmp/fpv$$.log ./${BIN} $@
+else
+ ./${BIN} $@
+fi

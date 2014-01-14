@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+<hostdec>
+  <host name="wow" mem="512">
+    <resource name="BLOCKING" />
+	<resource name="RESULT"/>
+   	<resource name="MERGER" />
+   	<resource name="READER"/>
+   </host>
+</hostdec>
+<placement>
+   <filter name="reader" libname="readerfilter.so" instances="1">
+   	<instance demands="READER"/>
+   </filter>
+   <filter name="blocking" libname="blockingfilter.so" instances="1">
+   	<instance demands="BLOCKING"/>
+   </filter>
+   <filter name="merger" libname="mergerfilter.so" instances="1">
+   	<instance demands="MERGER"/>
+   </filter>
+   <filter name="result" libname="resultfilter.so" instances="1">
+   	<instance demands="RESULT"/>
+   </filter>
+</placement>
+<layout>
+   <stream>
+      <from filter="reader" port="blockerOutput" policy="labeled_stream" policyLib="labelblocking.so" />
+      <to filter="blocking" port="readerInput" />
+   </stream>
+  <stream>
+      <from filter="blocking" port="mergerOutput" policy="labeled_stream" policyLib="labelmerger.so" />
+      <to filter="merger" port="blockerInput" />
+   </stream>
+   <stream>
+      <from filter="blocking" port="readerOutput" policy="labeled_stream" policyLib="labelreader.so" />
+      <to filter="reader" port="blockerInput" />
+   </stream>
+   <stream>
+      <from filter="blocking" port="resultOutput" policy="labeled_stream" policyLib="labelreader.so" />
+      <to filter="result" port="blockingInput" />
+   </stream>
+  <stream>
+      <from filter="merger" port="readerOutput" policy="labeled_stream" policyLib="labelreader.so" />
+      <to filter="reader" port="mergerInput" />
+   </stream>
+  <stream>
+      <from filter="reader" port="recordOutput" policy="labeled_stream" policyLib="labelcomparepair.so" />
+      <to filter="reader" port="recordInput" />
+   </stream>
+  <stream>
+      <from filter="reader" port="resultOutput" policy="labeled_stream" policyLib="labelresult.so" />
+      <to filter="result" port="readerInput" />
+   </stream>
+<!--
+	ACK Ports
+-->
+   <stream>
+      <from filter="blocking" port="ackWrite" policy="broadcast" policyLib="acklabel.so" />
+      <to filter="reader" port="ackRead" />
+   </stream>
+</layout>
+</config>
