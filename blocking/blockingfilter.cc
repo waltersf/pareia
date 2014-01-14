@@ -194,6 +194,9 @@ void BlockingFilter::ProcessDeterministicBlocking(){
 		insertKeysStmt.finalize();
 		queryKeysStmt.finalize();
 
+		//Commiting any left insert
+		database << "commit transaction";
+
 	}catch(sd::db_error e){
 			throw FerapardaException(string("Database error in blocking filter: ") + e.what());
 	}
