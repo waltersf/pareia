@@ -7,14 +7,14 @@ std::string trim_reduce(const std::string &str)
     const std::string &token = " \t";
 
     // find first and last non token
-    const unsigned int begin = str.find_first_not_of(token);
+    const int begin = str.find_first_not_of(token);
     if(begin == std::string::npos) return "";
     const int end = str.find_last_not_of(token);
     // substring it
     std::string toRet = str.substr(begin, end - begin - 1);
 
     // find first token
-    unsigned int start = toRet.find_first_of(token);
+    int start = toRet.find_first_of(token);
     while(start != std::string::npos)
     {
         const int finish = toRet.find_first_not_of(token, start);
@@ -44,7 +44,7 @@ std::string remove_punctuation(std::string &str)
 
 void replace(std::string &str, const std::string &from, const std::string &to)
 {
-    unsigned int start = str.find(from);
+    int start = str.find(from);
     while(start != std::string::npos)
     {
         str.replace(start, from.length(), to);
@@ -62,7 +62,7 @@ bool is_after_whitespace(std::string &str, int pos)
 
 void replace_word_starting_from(std::string &str, const std::string &from, const std::string &to, const int len)
 {
-    unsigned int start = str.find(from);
+    int start = str.find(from);
     while(start != std::string::npos)
     {
         const int prevstart = start;
@@ -101,10 +101,10 @@ void ltrim(std::string &str, char from)
 
 void remove_from_end(std::string &str, const std::string &from)
 {
-    unsigned int start = str.find_first_of(from);
+    int start = str.find_first_of(from);
     while(start != std::string::npos)
     {
-        const unsigned int len = str.length();
+        const int len = str.length();
         if(start == len - 1) // it's in the end
         {
             str.replace(len - from.length(), from.length(), "");
@@ -121,12 +121,12 @@ void remove_from_end(std::string &str, const std::string &from)
 
 void left_midword_trim(std::string &str, const std::string &from)
 {
-    unsigned int start = str.find_first_of(" ");
+    int start = str.find_first_of(" ");
     while(start != std::string::npos)
     {
         if(start - 1 > 0)
         {
-            for(unsigned int i = 0; i < from.length(); i++)
+            for(int i = 0; i < from.length(); i++)
             {
                 if(str[start + 1] == from[i])
                 {
@@ -210,7 +210,7 @@ void tira_particulas(std::string &str)
     replace(str, "bisneta", "");
 }
 
-void buscabr(std::string &str) {
+std::string buscabr(std::string &str) {
     // trim_reduce
     str = trim_reduce(str);
 
@@ -346,4 +346,5 @@ void buscabr(std::string &str) {
     // p := substr(p,1,1)||translate(substr(p,2), '.aeiouh', '.');
     // e vogais e agás exceto a vogal inicial, quando o é, precedida ou não de h - mas o h é eliminado
     left_midword_trim(str, "aeiouh");
+    return str;
 }

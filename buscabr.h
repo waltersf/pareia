@@ -5,5 +5,5 @@
 #include <string>
 #include <set>
 
-void buscabr(std::string &);
+std::string buscabr(std::string &);
 #endif

@@ -4,7 +4,7 @@ include ${TOPDIR}/Makefile.conf
 
 INCLUDE_DIRS = -I/usr/include/libxml2/ ${INCLUDES}
 CFLAGS2 = ${CFLAGS} -lz -shared
-OBJECTS=mergerfilter.o ../anthillutil.o ../blocking.o  ../cache.o  ../classifier.o  ../comparator.o  ../datasource.o  ../project.o  ../stringutil.o ../encode.o
+OBJECTS=mergerfilter.o ../anthillutil.o ../blocking.o ../cache.o ../classifier.o ../comparator.o ../datasource.o ../project.o ../stringutil.o ../encode.o ../buscabr.o
 
 target: ${OBJECTS} mergerfilter.so labelmerger.so
 
