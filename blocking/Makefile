@@ -6,7 +6,7 @@ include ${TOPDIR}/Makefile.conf
 INCLUDE_DIRS = -I/usr/include/libxml2/ -I../reader ${INCLUDES}
 CFLAGS2 = ${CFLAGS} -shared
 
-OBJECTS=blockingfilter.o ../anthillutil.o ../sqlite/sdsqlite.o ../blocking.o  ../cache.o  ../classifier.o  ../comparator.o  ../datasource.o  ../project.o  ../stringutil.o ../encode.o
+OBJECTS=blockingfilter.o ../anthillutil.o ../sqlite/sdsqlite.o ../blocking.o ../cache.o ../classifier.o ../comparator.o ../datasource.o ../project.o ../stringutil.o ../encode.o ../buscabr.o
 
 ./%.o: ./%.cc
 	@echo 'Building file: $<, using flags $(CFLAGS)'

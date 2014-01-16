@@ -2,7 +2,7 @@ TOPDIR=..
 include ${TOPDIR}/Makefile.conf
 
 all: target
-OBJECTS= ../anthillutil.o ../blocking.o  ../cache.o  ../classifier.o  ../comparator.o  ../datasource.o  ../project.o  ../stringutil.o ../encode.o
+OBJECTS= ../anthillutil.o ../blocking.o  ../cache.o  ../classifier.o  ../comparator.o  ../datasource.o  ../project.o  ../stringutil.o ../encode.o ../buscabr.o
 target: readerfilter.so labelreader.so labelfinishedjob.so labelcomparepair.so
 
 %.o: %.cc

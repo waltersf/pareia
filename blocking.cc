@@ -105,11 +105,15 @@ vector<string> ClassicalBlock::GenerateKeys(Record * record, bool ignoreIfAnyIsE
         		size = 5;
         	}
         	char *aux = new char(size);
-			std::transform(fieldValue.begin(), fieldValue.end(),fieldValue.begin(), ::tolower);
+          std::transform(fieldValue.begin(), fieldValue.end(),fieldValue.begin(), ::tolower);
         	brsoundex((char *) fieldValue.c_str(), aux, size);
         	key += aux;
         	free(aux);
-        } else {
+        } else if (transform == "buscabr"){
+          buscabr(fieldValue);
+          key += fieldValue;
+        }
+        else {
           key += fieldValue;
         }
       } else if (ignoreIfAnyIsEmpty){

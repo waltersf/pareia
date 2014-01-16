@@ -2,6 +2,7 @@
 #define BLOCKING_H_
 #include "datasource.h"
 #include "stlutil.h"
+#include "buscabr.h"
 #include <string>
 #include <vector>
 #include <ext/hash_map>

@@ -346,7 +346,7 @@ FieldInfo::FieldInfo(string n, FieldType t, int o, int s, bool useSeparator, int
 			}
 
 			while (!in.eof()) {
-				getline(in, freq, '\t'); // 
+				getline(in, freq, '\t'); //
 				getline(in, invfreq, '\t'); // weight1
 				getline(in, loginvfreq, '\t'); // weight2
 				getline(in, key, '\n'); //key
@@ -420,7 +420,7 @@ void DelimitedRecordDataSource::Index(){
 			this->memoryIndex.push_back(position);
 		}
 		if ((recordNumber % 1000000) == 0){
-			cout << "Indexed " << (recordNumber / 1000000) << "M records up to now." << endl;
+			cout << "Indexed " << (recordNumber / 1000000) << "M records up to now." << endl << flush;
 		}
 	}
 	fclose(this->fileDescriptor);
@@ -475,7 +475,7 @@ char * DelimitedRecordDataSource::GetLine(int id) {
 }
 void DelimitedRecordDataSource::setPosition(int pos) {
 	this->position = pos;
-	this->recordsToMove = (this->position % this->indexPageSize) + 1; // total of records to read until next record. 
+	this->recordsToMove = (this->position % this->indexPageSize) + 1; // total of records to read until next record.
 	unsigned long long pageId = this->memoryIndex[(unsigned long long) (this->position/ this->indexPageSize)];
 	//Move to the begining of page
 	if (fseeko64(this->fileDescriptor, pageId, SEEK_SET) < 0) {
@@ -487,7 +487,7 @@ Record * DelimitedRecordDataSource::GetNextRecord() {
 	//Move to the record
 	string aux = "%[^" + this->rowSeparator + "]"+ this->rowSeparator;
 	const char *readMask = aux.c_str();
-	
+
 	bool useNewLineAsSeparator = (this->rowSeparator == "\n");
 
 	char *buffer = new char[MAX_RECORD_SIZE];
@@ -501,7 +501,7 @@ Record * DelimitedRecordDataSource::GetNextRecord() {
 			delete[] buffer;
 			throw FerapardaException("Error reading datafile");
 		}
-		//if (this->recordsToMove > 0){ 
+		//if (this->recordsToMove > 0){
 			this->recordsToMove --;
 		//}
 	} while (!feof(this->fileDescriptor) && this->recordsToMove > 0);
