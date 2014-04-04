@@ -110,6 +110,8 @@ vector<string> ClassicalBlock::GenerateKeys(Record * record, bool ignoreIfAnyIsE
         	key += aux;
         	free(aux);
         } else if (transform == "buscabr"){
+          key += buscabr(fieldValue, false);
+        } else if (transform == "buscabrfl"){
           key += buscabr(fieldValue, true);
         }
         else {
